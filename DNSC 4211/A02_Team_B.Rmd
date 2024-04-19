@@ -1,0 +1,156 @@
+---
+title: "A02_Team_B"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+**Team Members: Sam Akrongold, Yongjin Li, Carla Tapia**
+
+**Part A: Toyota Motor Corporation**
+
+```{r}
+# installing readxl package
+library(readxl)
+# plot scatterplot using library(car)
+library(carData)
+library(car)
+```
+
+# Task_01 & Task_02
+```{r}
+toyota <- read_excel('Toyota.xlsx')
+toyota
+toyota <- within(toyota, {
+  Mileage.cat <- NA # initializing the variable 
+  Mileage.cat[Mileage < 50000] <- "Low_Mileage" # assigning that if a Toyota's mileage is below 50,000 then it should be in the     Low_Mileage category
+  Mileage.cat[Mileage >= 50000] <- "High_Mileage" # assigning that if a Toyota's mileage is above 50,000 then it should be in the High_Mileage category
+})
+toyota$Mileage.cat <- factor(toyota$Mileage.cat, levels = c("Low_Mileage", "High_Mileage")) # making the categorical variable from a character variable into a factor variable and creating the different levels for low and high mileage 
+summary(toyota$Mileage.cat) #seeing how many Toyotas are in the low and high mileage category
+scatterplot(Price ~ Age + Mileage.cat, regLine = FALSE, smooth = FALSE, col = "red", data = toyota) # scatterplot() from car package
+```
++ Task_01 Answer: As age and mileage increase, the price of the used Toyota decreases.
++ Task_02 Answer: The relationship between price and age does hold true for both mileage categories. When looking at just low mileage, as the mileage increases (staying below 50,000) and age increases, the price of the used Toyota decreases. When looking at high mileage, as the mileage increases (going above 50,000) and age also increases, the price of the used Toyota also decreases. This relationship can also be observed by the regression line that is plotted on the scatterplot.
+
+
+**Part B: Happiness VS. Age**
+
+# Task_01
+```{r}
+happiness <- read_excel('Happiness.xlsx')
+happiness
+scatterplot(Happiness ~ Age, regLine = FALSE, smooth = FALSE, col = "pink", data = happiness) # scatterplot() from car package
+```
+
+# Task_02
+```{r}
+regression <- lm(Happiness ~ Age, data = happiness) 
+summary(regression)
+```
++ We can observe that there is a positive relationship between happiness (dependent variable) and age (independent variable):
+  + With every increase in age its predicted that happiness will increase by 0.28446.
+
+
+**Part C: Gardner-Webb men's soccer team**
+
+```{r}
+soccer <- read_excel("Football.xlsx")
+salary_predict <- lm(Salary~PCR+TD+Age, data = soccer)
+summary(salary_predict)
+```
++ a) function for estimating salary = 32.7867 + (-0.8265 * PCR) + (0.7850 * TD) + (0.3862 * Age)
++ b) With every increase in total touchdowns scored, its predicted that salary will increase by 0.7850.
+
+
+```{r}
+Luis_Moyer <- data.frame(PCR=70.6, TD=34, Age=30)
+predict(salary_predict, Luis_Moyer)
+```
++ c) According to the model, Luis Moyer's predicted salary is 12.71234.
+
+
+```{r}
+Matt_Vilas <- data.frame(PCR=65.7, TD=28, Age=32)
+predict(salary_predict, Matt_Vilas)
+```
++ d) According to the model, Matt Vilas's predicted salary is 12.82458.
+
+
+```{r}
+resid(salary_predict)
+```
++ e) the residual salary for player 8 is 0.277157694; the residual salary for player 16 is -4.817300370.
+  + The salary for player 8 that the model predicts is very close to his actual salary. Compared to player 8, player 16's predicted salary point is fall more far away from his actual salary point.
+
+
+**Part D: Investing in College Town Real Estate**
+
+```{r}
+# read csv data and subset by university
+hdata <- read.csv("House_Price.csv")
+hdata_mich <- subset(hdata, Town == "Ann Arbor, MI") 
+hdata_iowa <- subset(hdata, Town == "Ames, IA")
+
+# waterbody, airport, and university are categorical variables that must be treated with the factor function before further analysis
+# Ann Arbor, MI
+hdata_mich$waterbody.f <- factor(hdata_mich$waterbody) 
+hdata_mich$airport.f <- factor(hdata_mich$airport)
+# Ames, IA
+hdata_iowa$waterbody.f <- factor(hdata_iowa$waterbody) 
+hdata_iowa$airport.f <- factor(hdata_iowa$airport)
+
+
+
+# first regression Models
+Areg_aa <- lm(formula = hdata_mich$price ~ hdata_mich$crime_rate + hdata_mich$resid_area + hdata_mich$air_qual + hdata_mich$room_num + hdata_mich$age + hdata_mich$dist1 + hdata_mich$dist2 + hdata_mich$dist3 + hdata_mich$dist4 + hdata_mich$teachers + hdata_mich$poor_prop + hdata_mich$n_hos_beds + hdata_mich$n_hot_rooms + hdata_mich$rainfall + hdata_mich$parks + hdata_mich$airport.f + hdata_mich$waterbody.f, data = hdata_mich)
+print("Regression Model A for Ann Arbor, MI")
+summary(Areg_aa)
+
+Areg_ia <- lm(formula = hdata_iowa$price ~ hdata_iowa$crime_rate + hdata_iowa$resid_area + hdata_iowa$air_qual + 
+hdata_iowa$room_num + hdata_iowa$age + hdata_iowa$dist1 + hdata_iowa$dist2 + hdata_iowa$dist3 + hdata_iowa$dist4 + hdata_iowa$teachers + hdata_iowa$poor_prop + hdata_iowa$n_hos_beds +
+hdata_iowa$n_hot_rooms + hdata_iowa$rainfall + hdata_iowa$parks + hdata_iowa$airport.f + 
+hdata_iowa$waterbody.f, data = hdata_iowa)
+print("Regression Model A for Ames, IA")
+summary(Areg_ia)
+
+# second regression model weeding out variables that are statistically insignificant (where p > 0.5)
+Breg_aa <- lm(formula = hdata_mich$price ~ hdata_mich$crime_rate + hdata_mich$air_qual + 
+hdata_mich$age + hdata_mich$dist1 + hdata_mich$dist2 + hdata_mich$teachers + hdata_mich$poor_prop + hdata_mich$n_hos_beds + hdata_mich$airport.f, data = hdata_mich)
+print("Regression Model B for Ann Arbor, MI")
+summary(Breg_aa)
+
+Breg_ia <- lm(formula = hdata_iowa$price ~ hdata_iowa$air_qual + hdata_iowa$room_num + hdata_iowa$age + hdata_iowa$dist1 + hdata_iowa$dist2 + hdata_iowa$dist4 + hdata_iowa$teachers + hdata_iowa$poor_prop + hdata_iowa$n_hos_beds + hdata_iowa$rainfall + hdata_iowa$parks + hdata_iowa$airport.f + hdata_iowa$waterbody.f, data = hdata_iowa)
+print("Regression Model B for Ames, IA")
+summary(Breg_ia)
+
+
+# Third regression models weeding out variables that are not denoted as statistically significant in second model
+Creg_aa <- lm(formula = hdata_mich$price ~ hdata_mich$crime_rate + hdata_mich$air_qual + hdata_mich$teachers + hdata_mich$poor_prop, data = hdata_mich)
+print("Regression Model C for Ann Arbor, MI")
+summary(Creg_aa)
+
+Creg_ia <- lm(formula = hdata_iowa$price ~ hdata_iowa$room_num + hdata_iowa$age + hdata_iowa$dist1 + hdata_iowa$teachers + hdata_iowa$poor_prop + hdata_iowa$n_hos_beds + hdata_iowa$airport.f, data = hdata_iowa)
+print("Regression Model C for Ames, IA")
+summary(Creg_ia)
+
+# After removing insignificant variables from each model 3 times, the third regression model for Ames, IA, 
+# and for Ann Arbor, MI are the best models to predict housing prices in the two towns. After each iteration
+# we pulled insignificant variables until we arrived at an output where all p-values in both models were less 
+# than 0.5. The prediction of each model are below:
+
+predict(Creg_aa, interval = "prediction") # for Ann Arbor, MI
+predict(Creg_ia, interval = "prediction") # for Ames, IA
+
+# Housing prices in Ann Arbor can be modeled by the equation: 
+# price = 8.00359 - 0.04829(crime_rate) + 4.87892(air_quality) + 0.98147(teachers) - 0.77333(poor_prop)
+
+# Housing prices in Ames, IA can be modeled by the equation:
+# price = -47.29931 + 9.33420(room_num) - 0.04827(age) - 0.52955(dist1) + 0.69751(teachers) - 0.16513(poor_prop) + 0.43927(n_hos_beds) + 1.63702(airport.fYES)
+
+
+# Between these two models, the model with a higher degree of predictive success is the one for 
+# Ames, IA since its R Squared value is higher than that of Ann Arbor, MI.
+```
+

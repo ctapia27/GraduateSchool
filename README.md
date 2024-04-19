@@ -4,6 +4,7 @@
 ##### List of Courses 
 - DNSC 4279 - Data Mining Course (R Code)
 - DSNC 4211 - Programming for Analytics (R & Python Code)
+- ISTM 3119 - Introduction to Programming (Python)
 - ISTM 4213 - Foundations of Cloud Applications (HTML, PHP, CSS)
 - ISTM 4214 - Foundations of AI (R Code)
 - ISTM 4217 - Internet of Things Management (PySpark)

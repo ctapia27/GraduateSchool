@@ -1,0 +1,135 @@
+---
+title: "A01_G32601797"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Part 1: Mix and Match Code Tasks**
+
+#Task_01
+```{r eval = F}
+#creating a function to find the hypotenuse of a triangle 
+hypotenuse <- function(){
+  base <- as.integer(readline(prompt = "Enter the base of the triangle: "))
+  #user input to input the value of the base of the triangle 
+  height <- as.integer(readline(prompt = "Enter the height of the triangle: "))
+  #user input to input the value of the height of the triangle 
+  hypotenuse.triangle = sqrt((base**2)+(height**2))
+  #creating the equation to find the hypotenuse of the triangle given the user input for the base and the height 
+  print(paste("The hypotenuse of a triange with base", base,"and height", height, "is equal to", hypotenuse.triangle))
+}
+hypotenuse()
+#calling the function
+```
+
+#Task_02
+```{r eval = F}
+sales <- as.integer(readline(prompt = "Please enter the total amount of your sales: "))
+basic <- 4000
+conveyance <- 500
+#This is asking for the user to input their total sales
+if (sales >= 1000000){
+  #if the user's total amount of sales exceeds to is equal to $1,000,000, then their salary must be evaluated based on column 1 
+  salary = basic + (basic*.2) + (basic*1.1) + conveyance + (sales*.1) + 1000 + sales 
+  #column 1 differs from column 2 because the user gets 10% of the sales and a $1000 bonus 
+  print(paste("Your salary based on your sales is: ", salary))
+}else{
+  #since there is no other option but to get lower than $1,000,000 then we use the else function to see what the salary of the user would be if their sales were lower than $1,000,000
+  salary = basic + (basic*.2) + (basic*1.1) + conveyance + (sales*.04) + 500  + sales
+  #column 2 differs from column 1 because the user gets 4% of the sales and a $500 bonus
+  print(paste("Your salary based on your sales is: ", salary))
+}
+
+```
+
+#Task_03
+```{r eval = F}
+number <-  as.integer(readline(prompt = "Enter a number :"))
+#user input to put in a number that will be reversed 
+reverse <-  0
+#assigning the reverse number a variable 
+  while (number > 0) {
+    #whenever number is > 0, the reverse of that number will be in the output
+    r = number %% 10
+    #assigning a variable that would hold the last digit of the number from the user input
+    reverse = reverse * 10 + r
+    #as the loop continues, the variable reverse updates to become the following number in the number the user input. multiplying it by 10 and adding r would allow the next digit be put in the output
+    number = number %/% 10
+    #this is removing the last digit and allowing the other digits to continue through the loop 
+  }
+print(paste("Reverse number is :", reverse))
+#printing the reverse of the number the user input 
+```
+
+#Task_04
+```{r eval = F}
+for(i in 1:5) {
+#since the range function returns the minimum and maximum of a given argument, before it would only return 5 since that was the maximum of the argument, since we are looking for 1-5, we would deleted the range function argument and replace it with 1:5 
+  for(j in 1:5) {
+    if (i == j){
+      cat("- ")
+#since using the printing function prints each output on a separate line, using the cat function concatenates the output into one line which is what we are looking for 
+    } else {
+      cat("* ")
+    }
+  }
+  cat("\n")
+#"\n" is the argument to print a new line 
+}
+```
+
+#Task_05 
+```{r eval = F}
+word <- function(){
+  #creating a function to allow the user to input 2 words and create a new word 
+  word1 <- readline(prompt= "Enter a word:")
+  #asking for user to input a word
+  word2 <- readline(prompt= "Enter a word:")
+  #asking for user to input a word
+  return(paste(word1, word2, word1, word2, sep = ""))
+  #returning the function to print the new word and making it a single word by including sep= "" which deletes the original space between each word 
+}
+word()
+#calling the function
+```
+
+**Part 2: Basic Plots and Descriptive Analytics**
+
+```{r}
+#installing "readxl" package
+library(readxl)
+```
+
+#Task_01
+```{r}
+fidelity <- read_excel('Tech_Energy.xlsx')
+#reading the Excel file and storing it in the variable, fidelity
+boxplot(fidelity$Technology, col = "pink", ylab = "Technology Mutal Funds Amount", main = "Boxplot for Technology")
+#creating the technology boxplot by using the boxplot function 
+#In the technology box plot, there are two outliers that are above the top whisker of the box plot. 
+boxplot(fidelity$Energy, col = "blue", ylab = "Energy Mutual Funds Amount", main = "Boxplot for Energy")
+#creating the energy boxplot by using the boxplot function
+#In the energy boxplot, there is one outlier that is below the bottom whisker of the box plot. 
+```
+
+#Task_02
+```{r}
+house_values <- read_excel("Census.xlsx")
+#reading the Excel file and storing it in the variable, house_values
+freq <- table(cut(house_values$`House Value`, breaks=c(0, 100000, 200000, 300000, 400000, 500000, 600000)))
+#creating the frequency of the data by using the table function to transform the data into a table and then using the cut function to divide the range of x into intervals 
+newfreq <- transform(freq)
+#transforming the frequency into a table 
+newfreq
+#calling the frequency table to be in the output
+hist(house_values$`House Value`, xlab = "House Value", col = "brown", breaks = c(0, 100000, 200000, 300000, 400000, 500000, 600000), main = "Histogram of Median House Value")
+#using the hist function to create a histogram of the House Values using and creating the x intervals by using breaks = 
+
+#The interval with the highest frequency is the 100,000 < x <= 200,000 median house value interval.
+#44 states have a median house value of $300,000 or less. 
+#The distribution is not symmetric, it is skewed to the right making it a positive skew. 
+```
+

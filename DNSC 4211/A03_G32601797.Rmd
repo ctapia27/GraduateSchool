@@ -1,0 +1,146 @@
+---
+title: "A03_G32601797"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+***Task 1: State-wise cigarette consumption***
+```{r}
+library(dplyr)
+library(ggplot2)
+library(ggthemes)
+cig <- read.csv("cigarette.csv")
+cig #reading the cigarette data
+
+cig1 <- cig %>% 
+  group_by(state) %>% #grouping the data by state
+  summarise(Average_price = mean(price)) %>% #summarizing the data by the average price to then find the top states with the highest average price
+  arrange(desc(Average_price)) %>% #ordering it in descending order to have the highest average price at the top
+  top_n(5) #top 5 states
+cig1
+
+top_cig1 <- cig %>% #creating new operator based off the 2nd one that is grouped by the state to find all the data of the top 5 states with the highest average price
+  filter(cig$state %in% cig1$state) #filtering the data to show the top 5 states by using %in% function, cig is the original dataset while cig1 is the grouped dataset with the average prices in descending order 
+top_cig1
+
+plot <- ggplot(top_cig1, aes(x = as.character(state), y = price)) + #plotting the dataset using ggplot
+  geom_boxplot() +
+  labs(x = "State", y = "Price", title = "Boxplot grouped by State") #labeling the plot
+  stat_boxplot() #puts in the components of a box-and-whisker plot
+plot
+
+```
++ In order to get the data by state, the data must be grouped by the state first. When using the group_by function, summarise must follow it. Since we would like to see the highest average price, we summarize it by the mean of the prices. In order to get it from highest to lowest, we arrange it in descending order and look for the top 5 states. Since the output does not show the top 5 states, we create a new operator that filters the data by looking for the states in cig that matches the states in cig1. The output is now the top 5 states. Then we plot the data using ggplot, using geom_boxplot to make a boxplot and adding stat_boxplot to add the components of a regular box-and-whisker plot. 
+
+***Task 2: Vaccination Record***
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(lubridate)
+vaccine <- read.csv('country_vaccinations.csv')
+vaccine #reading the file and storing it in vaccine 
+
+colvaccine <- subset(vaccine, country == 'Colombia')
+colvaccine #subsetting the data for the country of Colombia
+
+colvaccine1 <- colvaccine %>% #creating a new operator to change the date column type into 'date'
+  mutate(Date = as.Date(date))
+colvaccine1
+
+plot(daily_vaccinations_per_million ~ Date, data = colvaccine1, type = "l", main = "Colombia daily vaccinations per million by date")
+#plotting the data based off new date column that is 'date' type, type ="l" makes it a linear plot, and main = the main title of the plot 
+peruvaccine <- subset(vaccine, country == 'Peru')
+peruvaccine #subsetting the data for the country of Peru 
+
+peruvaccine1 <- peruvaccine %>% #creating a new operator to change the date column type into 'date'
+  mutate(Date = as.Date(date))
+peruvaccine1
+
+plot(daily_vaccinations_per_million~Date, data = peruvaccine1, type = "l", main = "Peru daily vaccinations per million by date")
+#plotting the data based off new date column that is 'date' type, type ="l" makes it a linear plot, and main = the main title of the plot 
+```
++ To get the data of a specific country, we must subset the data specifying the name of the country. Since we would like to plot it based of the date, we must change the type of the date from 'chr' to 'date' using as.Date function. Once the date column has been transformed, we plot the data to create a graph. We repeat the same steps for the other country.
+
+***Task 3: COVID-19 Study: Visualization using R Programming***
+```{r}
+library(ggplot2)
+library(tidyverse)
+library(dplyr)
+library(lubridate)
+
+covid <- read.csv('Pandemic.csv')
+covid #reading the dataset and storing it in covid 
+
+colombiacovid <- subset(covid, location == 'Colombia')
+colombiacovid #subsetting the original dataset to show the data for the country of Colombia
+
+colombiacovidd <- colombiacovid %>% #creating a new operator to change the date column type into 'date' and making it day-month-year
+  mutate(date = dmy(ds))
+colombiacovidd
+
+
+ggplot(colombiacovidd, #using ggplot to create the plot for Colombia
+       aes(x = date, y = value, color = data_type))+
+  geom_point(size = 1) + #adds the points into the graph
+  geom_line() + #adds the line to the graph
+  ggtitle("Colombia - Condition of cases of COVID-19 in Colombia") + #adding a title to the plot
+  labs(y = "New Cases/Day", x = "Months(2020)") #adding an x and y label to the plot
+
+perucovid <- subset(covid, location == 'Peru')
+perucovid #subsetting the original dataset to show the data for the country of Peru 
+
+perucovidd <- perucovid %>% #creating a new operator to change the date column type into 'date' and making it day-month-year
+  mutate(date = dmy(ds))
+perucovidd
+
+ggplot(perucovidd, #using ggplot to create the plot for Peru
+       aes(x = date, y = value, color = data_type))+
+  geom_point(size = 1) +#adds the points into the graph
+  geom_line() + #adds the line to the graph 
+  ggtitle("Peru - Condition of cases of COVID-19 in Peru") +#adding a title to the plot
+  labs(y = "New Cases/Day", x = "Months(2020)")#adding an x and y label to the plot
+```
++ To get the data of a specific country, we must subset the data specifying the name of the country. Since we would like to plot it based of the date, we must change the type of the date from 'chr' to 'date' using dmy function. We then plot the data using ggplot. 
+
+***Task 4: Agriculture District Development Indicators***
+```{r}
+library(ggplot2)
+library(dplyr)
+
+toydata <- data.frame(Type = c(rep("Pure sown area",3), rep("Area sown more than once",3), rep("Pure irrigated area",3), rep("Gross irrigated area",3)), Year = rep(c(2004,2014,2021),4), Value = c(291,279,277,158,183,192,252,244,248,346,382,390)) #storing the dataframe into toydata
+
+toydata_date<- toydata %>% 
+  group_by(Year, Type) %>% #grouping the data by year and type
+  summarise(value = sum(Value)) #sumarizing the data grouped by year and type with the values of each
+toydata_date
+
+p <-ggplot(toydata_date, aes(x = as.factor(Year),y= value, fill = Type)) #creating a ggplot 
+p + geom_bar(position = position_dodge(), stat = "identity", color = "black")+ #modifying the ggplot to be a boxplot 
+  geom_text(aes(label = value), position = position_dodge(width =0.9), vjust = -0.25)+ #adding the numbers onto the plot
+  scale_fill_calc()+ #adds the colors onto the graph
+  labs(x = "Year", y = "Thousand hect.", title = "Agriculture - District Development Indicators") #adding x, y, and main title onto the graph
+```
++When inputing the dataframe, I stored it in the variable called toydata. The toydata must be grouped by the year and the type in order to create the correct barplot and use the summarise function after group_by to find the number of values. The data is then graphed by using ggplot. 
+
+***Task 5: Nobel prize Study***
+```{r}
+library(dplyr)
+nobel <- read.csv('Nobel Prize.csv')
+nobel #reading the data and storing it in nobel
+nobel$num = 1 #initializing number to =1 when counting the number of prizes 
+
+top_prize <- nobel %>% 
+  select(Organization.Name, Prize, num) %>% #selecting the columns with the name of the organization, prize, and number of prizes
+  filter(trimws(Organization.Name) != "") %>% #taking out all the 'NA's 
+  group_by(Organization.Name) %>% #grouping the data by organization name
+  summarise(num_of_prizes_won = sum(num)) %>% #summarizing the data by the number of prizes won
+  top_n(25) %>% #displaying the top 25 organizations with prizes won
+  arrange(desc(num_of_prizes_won)) #displaying the number of prizes won in descending order
+top_prize
+
+```
++ In order to find the number of prizes won, the number must be initalized so nobel$num = 1, initializing the number of prizes won. Once that has been initalized, the specific columns have to be selected. Once selected, all the NA's in Organization.name have to be omitted so the function trimws is used to 'trim the white space' since na.omit does not work on this dataset. Then the data is grouped by the Organization.name and then summarized by the number of prizes won. The top 25 are displayed by top_n(25) and arranged in descending order to go from highest to lowest. 

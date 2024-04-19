@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <title>Review Submission</title>
+   <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <ul>
+        <li><a class="active" href="./index.html">RateMyDorm</a></li>
+        <li><a href="./index.html">Home</a></li>
+        <li><a href="./reviews.html">Reviews</a></li>
+        <li><a href="./signUp.html">Sign Up</a></li>
+    </ul>
+    <div class='homeBody'>
+        <h1>Submit a Dorm Review!</h1>
+        <form method="post" action="dorm_review_submission.php">
+          <fieldset>
+             <legend>Dorm Review Submission</legend>
+             <p>
+               <label>Username</label>
+               <input type="text" name="username" placeholder="Enter your username">
+            </p>
+             <p>
+                <label>First Name</label>
+                <input type="text" name="fname" placeholder="Enter your first name">
+             </p>
+             <p>
+                <label>Last Name</label>
+                <input type="text" name="lname" placeholder="Enter your Last Name">
+             </p>
+             <p>
+                <label>Email</label>
+                <input type="text" name="email" placeholder="Enter your GWU email">
+             </p>
+             <p>
+                <label>Which dorm would you like to review?</label>
+                <select name="specificdorm">
+                    <option>South Hall</option>
+                    <option>District House</option>
+                    <option>Shenkman Hall</option>
+                    <option>1959 E St.</option>
+                    <option>2109 F St.</option>
+                    <option>The Dakota</option>
+                    <option>FSK Hall</option>
+                    <option>Fulbright Hall</option>
+                    <option>International House</option>
+                    <option>JBKO Hall</option>
+                    <option>Mitchell Hall</option>
+                    <option>Munson Hall</option>
+                    <option>Philip Amsterdam Hall</option>
+                </select>
+             </p>
+             <p>
+               <label id="rating">Please rate the dorm on a scale of 1-10: </label>
+               <input type="number" id="rating" name="rating" min="1" max="10">
+            </p>
+             <p>
+                <label>Please leave your dorm review: </label>
+                <div>
+                    <textarea name="dormreview" rows="20" cols="50"></textarea>
+                </div>
+             </p>
+          </fieldset>
+          <input type="submit">
+          <input type="button" value="Clear">
+       </form>
+    </div>
+</body>

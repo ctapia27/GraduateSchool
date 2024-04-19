@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <ul>
+            <li><a class="active" href="./index.html">RateMyDorm</a></li>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./reviews.php">Reviews</a></li>
+            <li><a href="./signUp.html">Sign Up</a></li>
+        </ul>
+
+        <div class="homeBody">
+            <div class="topSection"></div>
+            <h1>Sign Up</h1>
+            <h3>Submit your Review now!</h3>
+            
+            <form action="student_signup.php" method="post">
+                <label for="fname">First name:</label><br>
+                <input type="text" id="fname" name="fname" ><br>
+                <label for="lname">Last name:</label><br>
+                <input type="text" id="lname" name="lname"><br>
+                <label for="lname">E-mail (.edu):</label><br>
+                <input type="text" id="email" name="email"><br>
+                <label for="username">Username: </label><br>
+                <input type="text" id="username" name="username"><br>
+                <label for="password">Password: </label><br>
+                <input type="text" id="pass" name="pass"><br>
+                <label for="hall">Choose a hall:</label><br>
+                <select name="hall" id="hall">
+                    <option value="volvo">South Hall</option>
+                    <option value="saab">District House</option>
+                    <option value="opel">Shenkman Hall</option>
+                </select>
+                <br><br>
+                <button class='button'><a href='reviewform.html'>Submit a review</a></button>
+                <br><br>
+                <input class='button' type="submit">
+                <br>
+              </form> 
+        </div>
+
+    </body>
+</html>

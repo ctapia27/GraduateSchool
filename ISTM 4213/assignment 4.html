@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="utf-8">
+   <link rel="stylesheet" href="assignment 4.css">
+   <title>Module 4 Assignment</title>
+</head>
+<body>
+   <h1>Class Assignment - Module 4</h1>
+   <form method="post" action="HTTP://www.randyconnolly.com/tests/process.php">
+      <fieldset>
+         <legend>Your Personal Information</legend>
+         <p>
+            <label>First Name</label>
+            <input type="text" name="fname" placeholder="Enter your first name">
+         </p>
+         <p>
+            <label>Last Name</label>
+            <input type="text" name="lname" placeholder="Enter Your Last Name">
+         </p>
+         <p>
+            <label>Phone Number</label>
+            <input type="tel" name="phone" placeholder="(xxx) xxx-xxxx">
+            <input type="radio" name="type" value="1">Mobile
+            <input type="radio" name="type" value="2">Home
+            <input type="radio" name="work" value="3">Work
+         </p>
+         <p>
+            <label>Email</label>
+            <input type="email" name="email" placeholder="Enter Your Email">
+         </p>
+      </fieldset>
+      <fieldset>
+         <legend>Old Address</legend>
+         <p>
+            <label>House Number</label>
+            <input type="text" name="OldHouseNumber" placeholder="Enter #">
+         </p>
+         <p>
+            <label>Street</label>
+            <input type="text" name="OldStreet" placeholder="Enter Street Name">
+            <label>Suffix</label>
+            <select name="OldSuffix">
+               <option>Select</option>
+               <option>Dr</option>
+               <option>St</option>
+               <option>Cr</option>
+               <option>Ct</option>
+               <option>Wy</option>
+            </select>
+         </p>
+         <p>
+            <label>City</label>
+            <input type="text" name="OldCity" placeholder="Enter City">
+            <label>State</label>
+            <select name="OldState">
+               <option>Select</option>
+               <option>NJ</option>
+               <option>VA</option>
+               <option>MD</option>
+               <option>DC</option>
+               <option>NY</option>
+               <option>CT</option>
+            </select>
+         </p>
+         <p>
+            <label>Zip Code</label>
+            <input type="text" name="OldZipCode" placeholder="Enter Zip Code">
+         </p>
+      </fieldset>
+      <fieldset>
+         <legend>New/Forwarding Address</legend>
+         <p>
+            <label>House Number</label>
+            <input type="text" name="NewHouseNumber" placeholder="Enter #">
+         </p>
+         <p>
+            <label>Street</label>
+            <input type="text" name="NewStreet" placeholder="Enter Street Name">
+            <label>Suffix</label>
+            <select name="NewSuffix">
+               <option>Select</option>
+               <option>Dr</option>
+               <option>St</option>
+               <option>Cr</option>
+               <option>Ct</option>
+               <option>Wy</option>
+            </select>
+         </p>
+         <p>
+            <label>City</label>
+            <input type="text" name="NewCity" placeholder="Enter City">
+            <label>State</label>
+            <select name="NewState">
+               <option>Select</option>
+               <option>NJ</option>
+               <option>VA</option>
+               <option>MD</option>
+               <option>DC</option>
+               <option>NY</option>
+               <option>CT</option>
+            </select>
+         </p>
+         <p>
+            <label>Zip Code</label>
+            <input type="text" name="NewZipCode" placeholder="Enter Zip Code">
+         </p>
+      </fieldset>
+      <input type="submit">
+      <input type="button" value="Clear">
+   </form>
+</body>
